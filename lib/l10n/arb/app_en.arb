@@ -1,0 +1,7 @@
+{
+    "@@locale": "en",
+    "welcomeText": "Hey there",
+    "@welcomeText": {
+        "description": "Text shown on the main page"
+    }
+}
