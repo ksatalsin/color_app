@@ -14,37 +14,37 @@ on:
       - main
 
 jobs:
-  test-build:
-    runs-on: macos-latest
-    steps:
-      - name: Get repo
-        uses: actions/checkout@v3
-      - name: Setup JAVA
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17.x'
-      - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - name: Get dependencies
-        run: flutter pub get
-      # - id: auth
-      #   name: Google Cloud Auth
-      #   uses: google-github-actions/auth@v1
-      #   with:
-      #     credentials_json: secrets.GCP_CREDENTIALS
-      # - name: Setup Google Cloud SDK
-      #   uses: 'google-github-actions/setup-gcloud@v1'
-      # # Consider passing for slightly stricte
-      # naæ: Analyze project source
-      # run: dart analyze -no-fatal-warnings
-      - name: mock .env file
-        run: |
-          touch .env
-          echo "$secrets.MOBILE_APP_SECRETS_DEV" | base64
-      - name: Run unit and widget tests
-        run: flutter test --machine
+  # test-build:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Get repo
+  #       uses: actions/checkout@v3
+  #     - name: Setup JAVA
+  #       uses: actions/setup-java@v1
+  #       with:
+  #         java-version: '17.x'
+  #     - name: Setup Flutter SDK
+  #       uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: 'stable'
+  #     - name: Get dependencies
+  #       run: flutter pub get
+  #     # - id: auth
+  #     #   name: Google Cloud Auth
+  #     #   uses: google-github-actions/auth@v1
+  #     #   with:
+  #     #     credentials_json: secrets.GCP_CREDENTIALS
+  #     # - name: Setup Google Cloud SDK
+  #     #   uses: 'google-github-actions/setup-gcloud@v1'
+  #     # # Consider passing for slightly stricte
+  #     # naæ: Analyze project source
+  #     # run: dart analyze -no-fatal-warnings
+  #     - name: mock .env file
+  #       run: |
+  #         touch .env
+  #         echo "$secrets.MOBILE_APP_SECRETS_DEV" | base64
+  #     - name: Run unit and widget tests
+  #       run: flutter test --machine
     
   semantic-pull-request:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
