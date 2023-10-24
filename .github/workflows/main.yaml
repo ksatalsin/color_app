@@ -42,7 +42,7 @@ jobs:
       - name: mock .env file
         run: |
           touch .env
-          echo "$secrets.MOBILE_APP_SECRETS_DEV | base64
+          echo "$secrets.MOBILE_APP_SECRETS_DEV" | base64
       - name: Run unit and widget tests
         run: flutter test --machine
     
