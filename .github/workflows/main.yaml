@@ -20,7 +20,7 @@ jobs:
       - name: Get repo
         uses: actions/checkout@v3
       - name: Setup JAVA
-        uses: actions/setup-java@l
+        uses: actions/setup-java@1
         with:
           java—version: '17.x'
       - name: Setup Flutter SDK
