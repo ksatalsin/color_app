@@ -22,7 +22,7 @@ jobs:
       - name: Setup JAVA
         uses: actions/setup-java@v1
         with:
-          java—version: '17.x'
+          java-version: '17.x'
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
@@ -31,14 +31,14 @@ jobs:
         run: flutter pub get
       # - id: auth
       #   name: Google Cloud Auth
-      #   uses: google-github—actions/auth@v1
+      #   uses: google-github-actions/auth@v1
       #   with:
       #     credentials_json: secrets.GCP_CREDENTIALS
       # - name: Setup Google Cloud SDK
       #   uses: 'google-github-actions/setup-gcloud@v1'
       # # Consider passing for slightly stricte
       # naæ: Analyze project source
-      # run: dart analyze —no-fatal—warnings
+      # run: dart analyze -no-fatal-warnings
       - name: mock .env file
         run: |
           touch .env
