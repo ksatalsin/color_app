@@ -1,1 +1,69 @@
+name: Flutter Workflow
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+
+jobs:
+  build:
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: "."
+
+    runs-on: ubuntu-latest
+
+    steps:
+          - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
+
+      - name: Install Dependencies
+        run: dart pub get
+
+      - name: Get changed Dart files
+        id: changed-files-dart
+        run: |
+          set -x 
+          changed_files1=$(git diff --name-status HEAD^ HEAD | grep -E '^[AM]\s+.*\.dart$' | cut -f2 || true)
+          echo "changed_files=$changed_files1"
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+
+      - name: Get changed Dart test files
+        id: changed-files-dart-test
+        run: |
+          set -x
+          changed_files=$(git diff --name-status HEAD^ HEAD | grep -E '^[AM]\s+.*_test\.dart$' | cut -f2 || true)
+          echo "Changed Dart test files: $changed_files"
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+
+
+      - name: Check Changed Dart Files
+        id: check-changed-files
+        run: |
+          changed_files="${{ steps.changed-files-dart.outputs.changed_files }}"
+          if [ -n "$changed_files" ]; then
+            echo "Changed Dart files detected."
+            echo "::set-output name=has_changed_files::true"
+          else
+            echo "No changed Dart files found."
+            echo "::set-output name=has_changed_files::false"
+          fi
+
+      - name: Check Formatting
+        #        if: ${{ steps.check-changed-files.outputs.has_changed_files == 'true' }}
+        run: |
+              changed_files="${{ steps.changed-files-dart.outputs.changed_files }}"
+              while IFS= read -r file; do
+              dart format --line-length 80 --set-exit-if-changed "$file" 
+              done <<< "$changed_files"
 
