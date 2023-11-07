@@ -50,17 +50,15 @@ jobs:
       - name: Check Changed Dart Files
         id: check-changed-files
         env:
-          CHANGED_FILES: ${{ steps.changed-files-dart.outputs.changed_files }}
+          CHANGED_FILES: ${{ steps.changed-files-dart-test.outputs.changed_files }}
         run: |
           echo "$CHANGED_FILES"
-          changed_files="${{ steps.changed-files-dart.outputs.changed_files }}"
+          changed_files="${{ steps.changed-files-dart-test.outputs.changed_files }}"
           echo $changed_files
           if [ -n "$changed_files" ]; then
             echo "Changed Dart files detected."
-            echo "::set-output name=has_changed_files::true"
           else
             echo "No changed Dart files found."
-            echo "::set-output name=has_changed_files::false"
           fi
 
       - name: Check Formatting
