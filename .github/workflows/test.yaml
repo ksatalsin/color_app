@@ -37,7 +37,7 @@ jobs:
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           changed_files=$(git diff --name-status HEAD^ HEAD | grep -E '^[AM]\s+.*\.dart$' | cut -f2 || true)
           echo "changed_files=$changed_files"
-          echo "changed_files1<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "changed_files<<$EOF" >> "$GITHUB_OUTPUT"
           echo "$changed_files" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
           echo "$GITHUB_OUTPUT"
@@ -55,15 +55,10 @@ jobs:
         id: check-changed-files
         env:
           CHANGED_TEST_FILES: ${{ steps.changed-files-dart-test.outputs.changed_files_test }}
-          CHANGED_FILES: ${{ steps.changed-files-dart.outputs.changed_files1 }}
+          CHANGED_FILES: ${{ steps.changed-files-dart.outputs.changed_files }}
         run: |
-          echo "$CHANGED_TEST_FILES"
-          echo "$CHANGED_FILES"
-
-          changed_files="${{ steps.changed-files-dart-test.outputs.changed_files }}"
-          echo $changed_files
-          if [ -n "$changed_files" ]; then
-            echo "Changed Dart files detected."
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "Changed Dart files detected. $CHANGED_FILES"
           else
             echo "No changed Dart files found."
           fi
