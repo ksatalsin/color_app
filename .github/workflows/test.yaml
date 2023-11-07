@@ -49,8 +49,10 @@ jobs:
 
       - name: Check Changed Dart Files
         id: check-changed-files
+        env:
+          CHANGED_FILES: ${{ steps.changed-files-dart.outputs.changed_files }}
         run: |
-          echo "${{ steps.changed-files-dart.outputs.changed_files }}"
+          echo "$CHANGED_FILES"
           changed_files="${{ steps.changed-files-dart.outputs.changed_files }}"
           echo $changed_files
           if [ -n "$changed_files" ]; then
