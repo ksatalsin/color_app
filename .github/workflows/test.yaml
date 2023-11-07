@@ -40,6 +40,7 @@ jobs:
           echo "changed_files1<<$EOF" >> "$GITHUB_ENV"
           echo "$changed_files" >> "$GITHUB_ENV"
           echo "$EOF" >> "$GITHUB_ENV"
+          echo "$GITHUB_ENV"
           
       - name: Get changed Dart test files
         id: changed-files-dart-test
