@@ -35,9 +35,12 @@ jobs:
         run: |
           set -x 
           changed_files=$(git diff --name-status HEAD^ HEAD | grep -E '^[AM]\s+.*\.dart$' | cut -f2 || true)
-          echo "123"
           echo "changed_files=$changed_files"
-          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+          { 
+            echo "changed_files<<EOF"
+            $changed_files
+            echo EOF" 
+          } >> $GITHUB_OUTPUT
 
       - name: Get changed Dart test files
         id: changed-files-dart-test
