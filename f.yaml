@@ -1,0 +1,46 @@
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "mainFlavors"
+    ios: null
+
+  flavors:
+
+    dev:
+      app:
+        name: "dAppName"
+      android:
+        applicationId: "com.example.app.dev"
+        firebase:
+          config: "firebase/development/google-services.json"
+        resValues:
+          HOST:
+            type: "string"
+            value: "https://api.dev.exaple.com"
+      ios:
+        bundleId: "com.example.app.dev"
+        firebase:
+          config: "firebase/development/GoogleService-Info.plist"
+        variables:
+          HOST:
+            value: "https://api.dev.exaple.com"
+
+    prod:
+      app:
+        name: "AppName"
+      android:
+        applicationId: "com.example.app"
+        firebase:
+          config: "firebase/production/google-services.json"
+        resValues:
+          HOST:
+            type: "string"
+            value: "https://api.prod.exaple.com"
+      ios:
+        bundleId: "com.example.app"
+        firebase:
+          config: "firebase/production/GoogleService-Info.plist"
+        variables:
+          HOST:
+            value: "https://api.prod.exaple.com"
+
